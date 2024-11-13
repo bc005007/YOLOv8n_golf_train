@@ -1,0 +1,8 @@
+# logs 폴더 내 모든 파일 및 하위 디렉토리 무시
+#logs/
+
+# temp 폴더 내 모든 파일 및 하위 디렉토리 무시
+merged_golfball/
+
+# # 대용량 설치 파일 무시
+# Anaconda3-2023.09-0-Linux-x86_64.sh/
