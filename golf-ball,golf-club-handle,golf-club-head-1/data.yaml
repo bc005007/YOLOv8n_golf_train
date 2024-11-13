@@ -1,0 +1,14 @@
+names:
+- golf ball
+- golf club-handle
+- golf club-head
+nc: 3
+roboflow:
+  license: CC BY 4.0
+  project: golf-ball-golf-club-handle-golf-club-head
+  url: https://universe.roboflow.com/sofyan-faidoul-gwvjg/golf-ball-golf-club-handle-golf-club-head/dataset/1
+  version: 1
+  workspace: sofyan-faidoul-gwvjg
+test: ../test/images
+train: ../train/images
+val: ../valid/images
