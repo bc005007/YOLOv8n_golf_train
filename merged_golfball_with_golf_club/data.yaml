@@ -1,6 +1,6 @@
-train: /root/YOLOv8n_Golfball/merged_golfball/train/images/  # 학습 이미지 경로
-val: /root/YOLOv8n_Golfball/merged_golfball/valid/images/    # 검증 이미지 경로
-test: /root/YOLOv8n_Golfball/merged_golfball/test/images/   # 테스트 이미지 경로 (선택 사항)
+train: /root/YOLOv8n_golf_train/merged_golfball_with_golf_club/train/images/  # 학습 이미지 경로
+val: /root/YOLOv8n_golf_train/merged_golfball_with_golf_club/valid/images/    # 검증 이미지 경로
+test: /root/YOLOv8n_golf_train/merged_golfball_with_golf_club/test/images/   # 테스트 이미지 경로 (선택 사항)
 
 names:
   0: GolfBall       # 클래스 이름
