@@ -1,33 +1,69 @@
-# 모델
-YOLOv8n
+# Model
+### YOLOv8n 선정 이유
+- 검증된 안정성: YOLOv8은 다양한 프로젝트에서 성능이 입증되어 있고, 최신 버전보다 안정적입니다. 실시간 골프공 추적 같은 작업에서는 검증된 솔루션이 더 신뢰할 수 있습니다.
+- 속도-정확도 균형: YOLOv8n은 경량화된 모델로, 빠른 속도와 적절한 정확도를 제공하여 실시간 처리가 중요한 프로젝트에 적합합니다. 최신 버전은 더 높은 정확도를 제공할 수 있지만, 그만큼 연산 비용이 증가할 수 있습니다.
+- 하드웨어 효율성: YOLOv8n은 고성능 GPU뿐만 아니라 CPU나 엣지 디바이스에서도 효율적으로 작동하여 다양한 환경에서 실행 가능하고 비용 효율적입니다.
+- 최신 기능 불필요: 최신 버전의 추가 기능들이 이 프로젝트에 큰 이점을 제공하지 않으며, YOLOv8n으로도 충분한 성능을 낼 수 있습니다.
 
-`yolov8n.pt`로 학습을 요청했음에도 불구하고 `yolo11n.pt`가 다운로드된 이유는 Automatic Mixed Precision (AMP) 기능을 확인하기 위한 루틴 검사 때문입니다. Ultralytics 패키지에서는 AMP가 제대로 작동하는지 확인하기 위해 기본적으로 `yolov8n.pt` 또는 다른 사전 학습된 모델 파일을 다운로드하는 과정을 거칩니다. 이 과정은 사용자가 지정한 모델과는 별개로 진행되며, AMP 체크가 통과되면 실제로 학습에 사용하는 모델은 사용자가 지정한 모델이 됩니다.
-AMP(Automatic Mixed Precision)란?
-AMP는 **반정밀도(FP16)**와 **단정밀도(FP32)**를 혼합하여 사용하는 훈련 기법입니다. 이는 GPU의 성능을 극대화하면서도 모델의 정확도를 유지하기 위한 방법입니다. AMP를 사용하면 다음과 같은 이점이 있습니다:
-	1.	메모리 절약: FP16 형식을 사용하면 메모리 사용량이 줄어들어 더 큰 모델을 훈련할 수 있습니다.
-	2.	속도 향상: FP16 연산은 FP32보다 훨씬 빠르기 때문에 훈련 속도가 빨라집니다. 특히, 최신 GPU 아키텍처(Tensor Core 지원)를 사용할 경우 최대 3배의 속도 향상을 얻을 수 있습니다.
-	3.	정확도 유지: 중요한 연산 단계에서는 여전히 FP32를 사용하여 정확도를 유지합니다.
+# Train
+### 골프공만 학습
 
+##### 1. 데이터
+- data1: https://universe.roboflow.com/school-eihku/golfball-crji6/dataset/1
+- data2: https://universe.roboflow.com/mrinmoy-bhadra-lojma/golfballdetector/dataset/10
 
-# 골프공만 학습
-data1: https://universe.roboflow.com/school-eihku/golfball-crji6/dataset/1
-data2: https://universe.roboflow.com/mrinmoy-bhadra-lojma/golfballdetector/dataset/10
-
-
-이미지 개수:
-train: 4381개
-test: 339개
-valid: 448개
+- 총 데이터 개수:
+	- train: 4381개(85%)
+	- valid: 448개(9%)
+	- test: 339개(6%)
 
 
-# 골프공과 골프채 헤드 학습
-data1: https://universe.roboflow.com/sofyan-faidoul-gwvjg/golf-ball-golf-club-handle-golf-club-head/dataset/1#
-- TRAIN SET(86%): 11676 Images
-- VALID SET(9%): 1217 Images
-- TEST SET(4%): 607 Images
-data2: https://universe.roboflow.com/clg-plzss/galf/dataset/2#
-- TRAIN SET(92%): 13502 Images
-- VALID SET(5%): 725 Images
-- TEST SET(3%): 430 Images
+- 클래스 이름
+	- 0: GolfBall
+
+##### 2. 하이퍼파라미터(hyperparameters) 설정
+- epochs: 100
+- imgsz: 640 # 이미지 크기
+- batch: 16
+- patience: 10  # 10 epoch 동안 개선이 없으면 조기 종료
+- augment: True  # 데이터 증강 활성화, 여러 증강 기법들이 학습 과정에서 자동으로 적용, 여기에는 회전, 크기 조정, 좌우 반전, 밝기 및 대비 조정 등의 다양한 변환이 포함
+
+##### 3. 결과
 
 
+
+### 골프공과 골프채 헤드 학습
+
+##### 1. 데이터
+- data1: https://universe.roboflow.com/sofyan-faidoul-gwvjg/golf-ball-golf-club-handle-golf-club-head/dataset/1#
+	- TRAIN SET(86%): 11676 Images
+	- VALID SET(9%): 1217 Images
+	- TEST SET(4%): 607 Images
+- data2: https://universe.roboflow.com/clg-plzss/galf/dataset/2#
+	- TRAIN SET(92%): 13502 Images
+	- VALID SET(5%): 725 Images
+	- TEST SET(3%): 430 Images
+
+- 총 데이터 개수:
+	- train: 24867개(89%)
+	- valid: 1904개(7%)
+	- test: 1020개(4%)
+
+- 클래스 이름
+	- 0: GolfBall
+	- 1: ClubHead
+	- 2: ClubHandle
+
+- 클래스별 데이터 개수
+	- Golf Ball (0): 24077개
+	- Club Head (1): 21725개
+	- Club Handle (2): 12193개
+
+##### 2. 하이퍼파라미터(hyperparameters) 설정
+- epochs: 200
+- imgsz: 640 # 이미지 크기
+- batch: 16
+- patience: 10  # 10 epoch 동안 개선이 없으면 조기 종료
+- augment: True  # 데이터 증강 활성화, 여러 증강 기법들이 학습 과정에서 자동으로 적용, 여기에는 회전, 크기 조정, 좌우 반전, 밝기 및 대비 조정 등의 다양한 변환이 포함
+
+##### 3. 결과
