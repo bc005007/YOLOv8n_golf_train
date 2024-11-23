@@ -1,0 +1,6 @@
+train: /root/YOLOv8n_golf_train/final_split_golfball_dataset/train/ # 학습 이미지 경로
+val: /root/YOLOv8n_golf_train/final_split_golfball_dataset/valid/  # 검증 이미지 경로
+test: /root/YOLOv8n_golf_train/final_split_golfball_dataset/test/  # 테스트 이미지 경로 (선택 사항)
+
+names: # 클래스 이름
+  0: golfball
